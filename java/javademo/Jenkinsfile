@@ -10,37 +10,36 @@ pipeline {
 		stage("Checkout code"){
 			steps
 			{
-				checkout([$class: 'GitSCM', branches: [[name: '*/master-java']], extensions: [], userRemoteConfigs: [[credentialsId: 'd4d0bed4-0c49-4703-a79a-260f454ed606', url: 'https://git.nagarro.com/freshertraining2022/amritadas.git']]])
-				echo 'Check Out'
+				checkout([$class: 'GitSCM', branches: [[name: '*/java']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkins_assignment', url: 'https://git.nagarro.com/freshertraining2022/sonamjain02.git']]])
 			}
         }
         stage('Clean') {
             steps {
-                sh 'mvn -f javaDemo/pom.xml clean'
+                sh 'mvn -f java/javademo/pom.xml clean'
                 echo 'Cleaning..'
             }
         }
         stage('Compile') {
             steps {
-                sh 'mvn -f javaDemo/pom.xml compile'
+                sh 'mvn -f java/javademo/pom.xml compile'
                 echo 'Compiling..'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn -f javaDemo/pom.xml test'
+                sh 'mvn -f java/javademo/pom.xml test'
                 echo 'Testing..'
             }
         }
         stage('Packaging') {
             steps {
-                sh 'mvn -f javaDemo/pom.xml package'
+                sh 'mvn -f java/javademo/pom.xml package'
                 echo 'Packageing..'
             }
         }
         stage('Install') {
             steps {
-                sh 'mvn -f javaDemo/pom.xml install'
+                sh 'mvn -f java/javademo/pom.xml install'
                 echo 'Installing..'
             }
         }
@@ -48,7 +47,7 @@ pipeline {
         
         stage('Juint result') {
             steps{
-                junit 'javaDemo/target/surefire-reports/*.xml'
+                junit 'java/javademo/target/surefire-reports/*.xml'
                 echo 'Deploying....'
             }
         }
