@@ -43,20 +43,11 @@ pipeline {
                 echo 'Installing..'
             }
         }
-        
-        
         stage('Juint result') {
             steps{
                 junit 'java/javademo/target/surefire-reports/*.xml'
                 echo 'Deploying....'
             }
-        }
-        stage('code quality') {
-            steps{
-                 withSonarQubeEnv('SonarQube')
-                 sh 'mvn sonar:sonar -f javaDemo/pom.xml'
-                 echo 'quality checking...'
-             }
         }
     }
 }
