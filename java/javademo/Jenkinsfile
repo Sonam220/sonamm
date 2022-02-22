@@ -49,5 +49,11 @@ pipeline {
                 echo 'Deploying....'
             }
         }
+        stage("Code Quality"){  
+            steps{  
+                  withSonarQubeEnv('SonarQube') {
+                  sh 'mvn -f java/javademo/pom.xml sonar:sonar'                
+            }            
+        }         
     }
 }
