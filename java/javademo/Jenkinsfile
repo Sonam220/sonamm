@@ -49,6 +49,26 @@ pipeline {
                   sh 'mvn -f java/javademo/pom.xml sonar:sonar'  
                 }
             }            
-        }         
+        }   
+        stage('Upload to Artifactory') {
+            steps
+            {
+                rtUpload (
+                    serverId: "JFrog",
+                    spec: '''{
+                        "files": [
+                        {
+                        "pattern": "*.war",
+                        "target": "sonam-java-libs-release-local"
+                        }
+                        ]
+                    }'''
+                )
+                rtPublishBuildInfo(
+                    serverId: "JFrog"
+                    )
+                echo "Artifacts Uploaded Successfully"
+            }
+        }
     }
 }
