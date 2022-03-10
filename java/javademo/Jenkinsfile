@@ -57,7 +57,7 @@ pipeline {
         stage('Docker Build and Tag') {
            steps {
                 sh 'sudo docker build -t javawebapp:latest freshertraining2022/sonamjain02/java/java/javademo/.' 
-                sh 'sudo docker tag javawebapp:latesh sonamjain02/java_assignment:latest'
+                sh 'sudo docker tag javawebapp:latest sonamjain02/java_assignment:latest'
             }
         }
         stage('Publish image to Docker Hub') {
@@ -73,7 +73,7 @@ pipeline {
         }
         stage('Run Docker container on Jenkins Agent') {
             steps {
-                sh "sudo docker run -d -p 8080:8003 sonamjain02/java_assignment:latest"
+                sh "sudo docker run -d -p 8003:8080 sonamjain02/java_assignment:latest"
             }
         }
         
