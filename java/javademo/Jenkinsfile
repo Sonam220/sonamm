@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Docker Build and Tag') {
            steps {
-                sh 'sudo docker build -t javawebapp:latest java/javademo/.' 
+                sh 'sudo docker build -t javawebapp:latest freshertraining2022/sonamjain02/tree/java/java/javademo/.' 
                 sh 'sudo docker tag javawebapp:latest sonamjain02/java_assignment:latest'
             }
         }
