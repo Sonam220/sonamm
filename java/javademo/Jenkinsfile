@@ -54,5 +54,28 @@ pipeline {
                 echo "Artifacts Uploaded Successfully"
             }
         }
+        stage('Docker Build and Tag') {
+           steps {
+                sh 'sudo docker build -t javawebapp:latest freshertraining2022/sonamjain02/edit/java/java/javademo/.' 
+                sh 'sudo docker tag javawebapp:latesh sonamjain02/java_assignment:latest'
+            }
+        }
+        stage('Publish image to Docker Hub') {
+           steps {  
+               withCredentials([string(credentialsId: 'docpass', variable: 'docker_pass')]) {
+                    sh "sudo docker login -u sonamjain02 -p ${docker_pass}"
+                }
+                
+                    sh  'sudo docker push sonamjain02/java_assignment:latest' 
+                
+                
+            }
+        }
+        stage('Run Docker container on Jenkins Agent') {
+            steps {
+                sh "sudo docker run -d -p 8080:8003 sonamjain02/java_assignment:latest"
+            }
+        }
+        
     }
 }
