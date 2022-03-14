@@ -60,17 +60,6 @@ pipeline {
                 sh 'sudo docker tag javawebapp:latest sonamjain02/java_assignment:latest'
             }
         }
-        stage('Publish image to Docker Hub') {
-           steps {  
-               withCredentials([string(credentialsId: 'docpass', variable: 'docker_pass')]) {
-                    sh "sudo docker login -u sonamjain02 -p ${docker_pass}"
-                }
-                
-                    sh  'sudo docker push sonamjain02/java_assignment:latest' 
-                
-                
-            }
-        }
         stage('Run Docker container on Jenkins Agent') {
             steps {
                 sh "sudo docker run -d --name mycontainer -p 8003:8080 sonamjain02/java_assignment:latest"
