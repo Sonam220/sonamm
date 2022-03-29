@@ -62,7 +62,7 @@ pipeline {
         }
         stage('Run Docker container on Jenkins Agent') {
             steps {
-                sh "sudo docker run -d --name mycontainer -p 8003:8080 sonamjain02/java_assignment:latest"
+                sh "sudo docker run -it --name mycontainer -p 8003:8080 sonamjain02/java_assignment:latest"
             }
         }
         
