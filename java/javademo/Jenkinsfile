@@ -66,14 +66,18 @@ pipeline {
                 sh "sudo docker run -dit --name mycontainer -p 8003:8080 sonamjain02/java_assignment:latest"
             }
         }
-        /*
-        stage('Run war File in tomcat') {
-            steps {
-                sshagent(['Aws_key']) {  
-                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/com.nagarro.samplepipeline.sonam.pipeline/java/javademo/target/javademo-0.0.1-SNAPSHOT.war ec2-user@54.237.86.198:/opt/tomcat/webapps"
-                }
+        stage ("Send artifacts to AWS")
+        {
+            steps{
+                
+            sshPublisher(publishers: [sshPublisherDesc(configName: 'AWS', transfers: [sshTransfer(cleanRemote: false, excludes: '',  flatten: true, execCommand: 
+            '''
+            sudo systemctl restart docker
+            if sudo docker ps -a | grep sonam; then sudo docker rm -f sonam; fi 
+            sudo docker run -d -p 8085:8080 -v /home/ec2-user/sonam/:/usr/local/tomcat/webapps --name sonam docker.io/library/tomcat:9.0 
+            '''
+            , makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'java/javademo/target/javademo-0.0.1-SNAPSHOT.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
             }
-        }*/
-        
+        }
     }
 }
