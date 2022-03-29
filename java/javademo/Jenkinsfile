@@ -65,14 +65,14 @@ pipeline {
                 sh "sudo docker run -it --name mycontainer -p 8003:8080 sonamjain02/java_assignment:latest"
             }
         }
-        
+        /*
         stage('Run war File in tomcat') {
             steps {
                 sshagent(['Aws_key']) {
                     sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/com.nagarro.samplepipeline.sonam.pipeline/java/javademo/target/javademo-0.0.1-SNAPSHOT.war ec2-user@54.237.86.198:/opt/tomcat/webapps"
                 }
             }
-        }
+        }*/
         
     }
 }
